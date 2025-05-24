@@ -6,15 +6,25 @@
   <script defer src="https://pyscript.net/latest/pyscript.js"></script>
 </head>
 <body>
-  <h1>Welcome to My Python Website</h1>
+  <h1>Find Out How Many Days You've Lived!</h1>
+
+  <label for="birthdate">Enter your birthdate:</label>
+  <input type="date" id="birthdate" />
+  <button py-click="calculate_days">Submit</button>
+
+  <p id="output"></p>
 
   <py-script>
-    import datetime
-now=datetime.datetime.today()
-year,month,day=map(int,input("enter birth year month and day:").split())
-birth_day=datetime.datetime(year,month,day)
-survived=now-birth_day
-print(f"you survived survived :{survived.days} days")
+    from datetime import datetime
+    from pyscript import Element
+
+    def calculate_days(*args):
+        birth_input = Element("birthdate").element.value
+        birth_date = datetime.strptime(birth_input, "%Y-%m-%d")
+        today = datetime.today()
+        lived_days = (today - birth_date).days
+        Element("output").element.innerText = f"You have lived for {lived_days} days!"
   </py-script>
 </body>
 </html>
+
